@@ -9,13 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: A single-page application with a fixed sidebar for navigation and a main content area. The structure is thematic, mirroring the report's categories. This allows users to easily jump between sections like "Core Frontend," "Rendering," etc., without losing context. The main content area for each section will use cards and grids to present information clearly. A "Key Concepts" chart at the top provides a high-level overview and allows for interactive filtering of content, making it easy to see the relationships between different areas. This structure was chosen for its intuitive navigation and ability to handle dense information without overwhelming the user. -->
-    <!-- Visualization & Content Choices: 
-        - Report Info: Technology Categories (Core, Rendering, etc.). Goal: High-level comparison. Viz/Presentation: Doughnut Chart (Chart.js). Interaction: Clicking a segment on the chart will scroll to the corresponding section. Justification: Provides an immediate visual summary of the learning map's scope.
-        - Report Info: Lists of technologies within each category. Goal: Organize & Inform. Viz/Presentation: Styled cards with icons and descriptions. Interaction: Hover effects for engagement, clickable links (mock). Justification: Cards provide a structured and visually appealing way to present detailed information for each technology.
-        - Report Info: Tooling & Performance Concepts. Goal: Compare relative importance/usage. Viz/Presentation: Horizontal Bar Chart (Chart.js). Interaction: Tooltips on hover provide more detail. Justification: A bar chart is effective for comparing the perceived importance or complexity of different tools and concepts.
-        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -53,22 +46,19 @@
                 height: 350px;
             }
         }
-         .main-content {
+           .main-content {
             scroll-behavior: smooth;
         }
     </style>
 </head>
 <body class="antialiased">
     <div class="flex min-h-screen">
-        <!-- Sidebar Navigation -->
         <aside class="w-64 bg-[#faf8f5] border-r border-[#eaddc7] p-6 hidden lg:block fixed h-full">
             <h2 class="text-xl font-bold text-[#312a21] mb-6">Learning Map 2026</h2>
             <nav id="desktop-nav" class="space-y-2">
-                <!-- Nav links will be inserted here by JS -->
-            </nav>
+                </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-10 main-content">
             <header class="mb-10">
                 <div class="flex justify-between items-center">
@@ -82,20 +72,17 @@
                 <p class="mt-2 text-lg text-gray-600">An interactive guide to the modern frontend ecosystem. Click the chart segments or use the navigation to explore different areas.</p>
             </header>
 
-            <!-- Mobile Nav Panel -->
             <div id="mobile-nav" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40">
                 <div class="fixed left-0 top-0 h-full w-64 bg-[#faf8f5] p-6 overflow-y-auto">
                     <button id="close-mobile-menu" class="absolute top-4 right-4 text-2xl">&times;</button>
                     <h2 class="text-xl font-bold text-[#312a21] mb-6">Navigation</h2>
                     <nav id="mobile-nav-links" class="space-y-2">
-                         <!-- Mobile nav links will be inserted here by JS -->
-                    </nav>
+                           </nav>
                 </div>
             </div>
 
             <div id="app-content">
-                <!-- Sections will be dynamically generated here -->
-            </div>
+                </div>
             <footer class="w-full mt-10 py-4 px-4 text-sm card rounded text-gray-600">
         <p class="flex items-center justify-center gap-1 flex-wrap  ">
   Created with <span class="text-red-500">❤️</span> by
@@ -234,6 +221,71 @@
             const mobileNavLinks = document.getElementById('mobile-nav-links');
             const sectionKeys = Object.keys(data);
 
+            // Function to get a link for each technology
+            function getLink(itemName) {
+                switch (itemName) {
+                    case "TypeScript": return "https://www.typescriptlang.org/";
+                    case "React": return "https://react.dev/";
+                    case "Next.js": return "https://nextjs.org/";
+                    case "Tailwind CSS": return "https://tailwindcss.com/";
+                    case "Modern CSS": return "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference"; // General CSS reference
+                    case "CSR (Client-Side Rendering)": return "https://developer.mozilla.org/en-US/docs/Glossary/Client-side_rendering";
+                    case "SSR (Server-Side Rendering)": return "https://developer.mozilla.org/en-US/docs/Glossary/Server-side_rendering";
+                    case "SSG (Static Site Generation)": return "https://www.netlify.com/blog/2020/06/04/what-is-static-site-generation/";
+                    case "ISR (Incremental Static Regeneration)": return "https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration";
+                    case "Hybrid Rendering": return "https://nextjs.org/docs/pages/building-your-application/rendering"; // Next.js covers hybrid well
+                    case "Islands Architecture": return "https://jasonformat.com/islands-architecture/";
+                    case "Routing": return "https://developer.mozilla.org/en-US/docs/Web/API/History_API";
+                    case "Mobile-First Navigation": return "https://www.smashingmagazine.com/2013/09/responsive-navigation-patterns-context/";
+                    case "Micro-Frontends": return "https://micro-frontends.org/";
+                    case "Module Federation": return "https://webpack.js.org/concepts/module-federation/";
+                    case "Web Components": return "https://www.webcomponents.org/";
+                    case "MUI (Material-UI)": return "https://mui.com/";
+                    case "Tailwind UI": return "https://tailwindui.com/";
+                    case "Shadcn UI": return "https://ui.shadcn.com/";
+                    case "Chakra UI": return "https://chakra-ui.com/";
+                    case "Radix UI": return "https://www.radix-ui.com/";
+                    case "Headless UI": return "https://headlessui.com/";
+                    case "Vite": return "https://vitejs.dev/";
+                    case "Webpack": return "https://webpack.js.org/";
+                    case "Lazy Loading": return "https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading";
+                    case "Conditional Loading": return "https://react.dev/learn/conditional-rendering"; // Example for React
+                    case "Suspense": return "https://react.dev/reference/react/Suspense";
+                    case "Code Splitting": return "https://webpack.js.org/guides/code-splitting/";
+                    case "react-window": return "https://react-window.vercel.app/";
+                    case "Lozad.js": return "https://lozad.marcelodolza.com/";
+                    case "Lenis.js":
+                    case "Lenis": return "https://lenis.studio/";
+                    case "Jest": return "https://jestjs.io/";
+                    case "React Testing Library": return "https://testing-library.com/docs/react-testing-library/intro/";
+                    case "Storybook": return "https://storybook.js.org/";
+                    case "Cypress": return "https://www.cypress.io/";
+                    case "Playwright": return "https://playwright.dev/";
+                    case "Testim": return "https://www.testim.io/";
+                    case "QA Wolf": return "https://www.qawolf.com/";
+                    case "Framer Motion": return "https://www.framer.com/motion/";
+                    case "GSAP": return "https://greensock.com/gsap/";
+                    case "GSAP ScrollTrigger": return "https://greensock.com/docs/v3/Plugins/ScrollTrigger";
+                    case "anime.js": return "https://animejs.com/";
+                    case "barba.js": return "https://barbajs.org/";
+                    case "matter.js": return "https://brm.io/matter-js/";
+                    case "Three.js": return "https://threejs.org/";
+                    case "Babylon.js": return "https://www.babylonjs.com/";
+                    case "Hugging Face": return "https://huggingface.co/";
+                    case "LangChain": return "https://www.langchain.com/";
+                    case "brain.js": return "https://github.com/BrainJS/brain.js";
+                    case "ml5.js": return "https://ml5js.org/";
+                    case "OpenCV.js": return "https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html";
+                    case "WebAssembly (WASM)": return "https://webassembly.org/";
+                    case "Keyboard Navigation": return "https://webaim.org/techniques/keyboard/";
+                    case "ARIA Roles": return "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles";
+                    case "Semantic HTML": return "https://developer.mozilla.org/en-US/docs/Glossary/Semantic_HTML";
+                    case "Form Labeling": return "https://webaim.org/techniques/forms/controls#labels";
+                    default: return `https://www.google.com/search?q=${encodeURIComponent(itemName + " frontend")}`;
+                }
+            }
+
+
             // Create overview section with chart
             const overviewSection = document.createElement('section');
             overviewSection.id = 'overview';
@@ -269,12 +321,15 @@
                 section.id = sectionId;
                 section.className = 'mb-16';
                 
-                let itemsHtml = sectionData.items.map(item => `
-                    <div class="card rounded-lg p-4">
+                let itemsHtml = sectionData.items.map(item => {
+                    const itemLink = getLink(item.name);
+                    return `
+                    <a href="${itemLink}" target="_blank" rel="noopener noreferrer" class="card block rounded-lg p-4 hover:border-blue-300">
                         <h4 class="font-bold text-md text-[#312a21]">${item.name}</h4>
                         <p class="text-sm text-gray-600 mt-1">${item.desc}</p>
-                    </div>
-                `).join('');
+                    </a>
+                    `;
+                }).join('');
 
                 section.innerHTML = `
                     <div class="flex items-center mb-4">
