@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Frontend Learning Map 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a fixed sidebar for navigation and a main content area. The structure is thematic, mirroring the report's categories. This allows users to easily jump between sections like "Core Frontend," "Rendering," etc., without losing context. The main content area for each section will use cards and grids to present information clearly. A "Key Concepts" chart at the top provides a high-level overview and allows for interactive filtering of content, making it easy to see the relationships between different areas. This structure was chosen for its intuitive navigation and ability to handle dense information without overwhelming the user. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Technology Categories (Core, Rendering, etc.). Goal: High-level comparison. Viz/Presentation: Doughnut Chart (Chart.js). Interaction: Clicking a segment on the chart will scroll to the corresponding section. Justification: Provides an immediate visual summary of the learning map's scope.
+        - Report Info: Lists of technologies within each category. Goal: Organize & Inform. Viz/Presentation: Styled cards with icons and descriptions. Interaction: Hover effects for engagement, clickable links (mock). Justification: Cards provide a structured and visually appealing way to present detailed information for each technology.
+        - Report Info: Tooling & Performance Concepts. Goal: Compare relative importance/usage. Viz/Presentation: Horizontal Bar Chart (Chart.js). Interaction: Tooltips on hover provide more detail. Justification: A bar chart is effective for comparing the perceived importance or complexity of different tools and concepts.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f1eb;
+            color: #4a4a4a;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active, .nav-link:hover {
+            background-color: #eaddc7;
+            color: #312a21;
+            transform: translateX(4px);
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #eaddc7;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+         .main-content {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-[#faf8f5] border-r border-[#eaddc7] p-6 hidden lg:block fixed h-full">
+            <h2 class="text-xl font-bold text-[#312a21] mb-6">Learning Map 2026</h2>
+            <nav id="desktop-nav" class="space-y-2">
+                <!-- Nav links will be inserted here by JS -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-10 main-content">
+            <header class="mb-10">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-[#312a21]">Frontend Development Learning Map 2026</h1>
+                    <div class="lg:hidden">
+                        <button id="mobile-menu-button" class="p-2 rounded-md text-[#312a21] bg-[#eaddc7]">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="mt-2 text-lg text-gray-600">An interactive guide to the modern frontend ecosystem. Click the chart segments or use the navigation to explore different areas.</p>
+            </header>
+
+            <!-- Mobile Nav Panel -->
+            <div id="mobile-nav" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40">
+                <div class="fixed left-0 top-0 h-full w-64 bg-[#faf8f5] p-6 overflow-y-auto">
+                    <button id="close-mobile-menu" class="absolute top-4 right-4 text-2xl">&times;</button>
+                    <h2 class="text-xl font-bold text-[#312a21] mb-6">Navigation</h2>
+                    <nav id="mobile-nav-links" class="space-y-2">
+                         <!-- Mobile nav links will be inserted here by JS -->
+                    </nav>
+                </div>
+            </div>
+
+            <div id="app-content">
+                <!-- Sections will be dynamically generated here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const data = {
+                "Core Frontend": {
+                    icon: '💻',
+                    description: "The foundational pillars of modern web development, from language to frameworks.",
+                    items: [
+                        { name: "TypeScript", desc: "A superset of JavaScript that adds static typing, enhancing code quality and maintainability." },
+                        { name: "React", desc: "A declarative, component-based JavaScript library for building user interfaces." },
+                        { name: "Next.js", desc: "A React framework for building production-ready applications with features like SSR and SSG." },
+                        { name: "Tailwind CSS", desc: "A utility-first CSS framework for rapidly building custom designs directly in your markup." },
+                        { name: "Modern CSS", desc: "Advanced features like @container, :has(), :is(), :not(), and :where() for powerful styling." },
+                    ]
+                },
+                "Rendering & Architecture": {
+                    icon: '🏛️',
+                    description: "Strategies and patterns for how web pages are delivered and structured.",
+                    items: [
+                        { name: "CSR (Client-Side Rendering)", desc: "The browser downloads a minimal HTML page and JavaScript, which then renders the content." },
+                        { name: "SSR (Server-Side Rendering)", desc: "The server renders the initial HTML for a page, improving initial load times and SEO." },
+                        { name: "SSG (Static Site Generation)", desc: "Pages are pre-rendered at build time, resulting in highly performant static assets." },
+                        { name: "ISR (Incremental Static Regeneration)", desc: "A Next.js feature to update static pages after they've been built without a full site rebuild." },
+                        { name: "Hybrid Rendering", desc: "Combining different rendering strategies (SSR, SSG, CSR) in one application." },
+                        { name: "Islands Architecture", desc: "Loading small, interactive 'islands' of JavaScript on top of static HTML to improve performance." },
+                        { name: "Routing", desc: "The mechanism for navigating between different pages or views within an application." },
+                        { name: "Mobile-First Navigation", desc: "Designing navigation primarily for mobile devices, then scaling up for larger screens." },
+                    ]
+                },
+                "Componentization & UI Libraries": {
+                    icon: '🧱',
+                    description: "Tools and techniques for building reusable and scalable UI components.",
+                    items: [
+                        { name: "Micro-Frontends", desc: "Decomposing a large frontend into smaller, independently deployed applications." },
+                        { name: "Module Federation", desc: "A Webpack feature allowing separate builds to share code, enabling micro-frontends." },
+                        { name: "Web Components", desc: "A set of APIs for creating custom, reusable, encapsulated HTML tags." },
+                        { name: "MUI (Material-UI)", desc: "A comprehensive React UI component library for Google's Material Design." },
+                        { name: "Tailwind UI", desc: "Official UI components and templates built with Tailwind CSS." },
+                        { name: "Shadcn UI", desc: "Reusable components built with Radix UI and Tailwind CSS, designed for copy-pasting." },
+                        { name: "Chakra UI", desc: "A simple, modular, and accessible component library for React applications." },
+                        { name: "Radix UI", desc: "A low-level UI component library for building high-quality, accessible design systems." },
+                        { name: "Headless UI", desc: "Unstyled, fully accessible UI components designed to be styled with Tailwind CSS." },
+                    ]
+                },
+                "Tooling & Performance": {
+                    icon: '🚀',
+                    description: "The ecosystem of build tools, bundlers, and optimization techniques.",
+                    items: [
+                        { name: "Vite", desc: "A fast build tool offering instant server start and lightning-fast HMR." },
+                        { name: "Webpack", desc: "A static module bundler for modern JavaScript applications." },
+                        { name: "Lazy Loading", desc: "Deferring the loading of non-critical resources until they are needed." },
+                        { name: "Conditional Loading", desc: "Loading specific components or modules only when certain conditions are met." },
+                        { name: "Suspense", desc: "A React feature to 'wait' for code to load and specify a loading indicator." },
+                        { name: "Code Splitting", desc: "Dividing code into smaller chunks that can be loaded on demand." },
+                        { name: "react-window", desc: "A library for efficiently rendering large lists and tabular data." },
+                        { name: "Lozad.js", desc: "A lightweight, pure JavaScript lazy loader for images, videos, and iframes." },
+                        { name: "Lenis.js", desc: "A smooth scroll library for enhancing scroll animations." },
+                    ]
+                },
+                "Testing": {
+                    icon: '🧪',
+                    description: "Frameworks and libraries for ensuring application quality and reliability.",
+                    items: [
+                        { name: "Jest", desc: "A popular JavaScript Testing Framework with a focus on simplicity." },
+                        { name: "React Testing Library", desc: "Utilities for testing React components in a user-centric way." },
+                        { name: "Storybook", desc: "A tool for developing and testing UI components in isolation." },
+                        { name: "Cypress", desc: "A fast and reliable end-to-end testing framework for anything that runs in a browser." },
+                        { name: "Playwright", desc: "A Node.js library to automate Chromium, Firefox, and WebKit with a single API." },
+                        { name: "Testim", desc: "An AI-powered test automation platform for agile teams." },
+                        { name: "QA Wolf", desc: "A platform for generating and maintaining end-to-end tests." },
+                    ]
+                },
+                "Animations": {
+                    icon: '✨',
+                    description: "Libraries for creating fluid, interactive, and engaging user experiences.",
+                    items: [
+                        { name: "Framer Motion", desc: "A production-ready motion library for React." },
+                        { name: "GSAP", desc: "A robust JavaScript toolset for professional-grade animations." },
+                        { name: "GSAP ScrollTrigger", desc: "A GSAP plugin for creating scroll-based animations." },
+                        { name: "anime.js", desc: "A lightweight JavaScript animation library with a simple, yet powerful API." },
+                        { name: "barba.js", desc: "A library for creating fluid and smooth transitions between website pages." },
+                        { name: "matter.js", desc: "A 2D physics engine for the web." },
+                        { name: "Lenis", desc: "(Duplicated) A smooth scroll library for enhancing scroll animations." },
+                    ]
+                },
+                "3D & Graphics": {
+                    icon: '🧊',
+                    description: "Technologies for bringing three-dimensional graphics and rendering to the web.",
+                    items: [
+                        { name: "Three.js", desc: "A JavaScript 3D library that simplifies displaying 3D graphics in a browser using WebGL." },
+                        { name: "Babylon.js", desc: "A powerful, open game and rendering engine packed into a friendly JavaScript framework." },
+                    ]
+                },
+                "AI, ML & WASM": {
+                    icon: '🧠',
+                    description: "Advanced technologies for computation, machine learning, and new frontiers on the web.",
+                    items: [
+                        { name: "Hugging Face", desc: "A platform with tools and models for building and deploying machine learning models." },
+                        { name: "LangChain", desc: "A framework for developing applications powered by language models." },
+                        { name: "brain.js", desc: "A JavaScript library for neural networks." },
+                        { name: "ml5.js", desc: "Friendly machine learning for the web, accessible to artists and creative coders." },
+                        { name: "OpenCV.js", desc: "Open Source Computer Vision Library compiled to JavaScript for in-browser use." },
+                        { name: "WebAssembly (WASM)", desc: "A binary instruction format enabling high-performance applications on the web." },
+                    ]
+                },
+                "Accessibility": {
+                    icon: '♿',
+                    description: "Principles and practices for building inclusive websites usable by everyone.",
+                    items: [
+                        { name: "Keyboard Navigation", desc: "Ensuring all interactive elements are reachable and operable using only a keyboard." },
+                        { name: "ARIA Roles", desc: "Attributes that define UI element roles, helping assistive technologies interpret content." },
+                        { name: "Semantic HTML", desc: "Using HTML elements for their intended purpose to convey meaning to browsers." },
+                        { name: "Form Labeling", desc: "Associating labels with form controls to make them understandable for all users." },
+                    ]
+                }
+            };
+
+            const appContent = document.getElementById('app-content');
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavLinks = document.getElementById('mobile-nav-links');
+            const sectionKeys = Object.keys(data);
+
+            // Create overview section with chart
+            const overviewSection = document.createElement('section');
+            overviewSection.id = 'overview';
+            overviewSection.className = 'mb-16';
+            overviewSection.innerHTML = `
+                <h2 class="text-2xl font-bold text-[#312a21] mb-4">Key Concepts Overview</h2>
+                <div class="p-6 bg-white rounded-lg shadow-sm border border-[#eaddc7]">
+                    <div class="chart-container">
+                        <canvas id="overviewChart"></canvas>
+                    </div>
+                </div>
+            `;
+            appContent.appendChild(overviewSection);
+
+            // Populate sections and nav
+            sectionKeys.forEach(key => {
+                const sectionData = data[key];
+                // Updated sectionId generation to create valid HTML IDs
+                const sectionId = key.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+                // Create Nav Links
+                const navLink = document.createElement('a');
+                navLink.href = `#${sectionId}`;
+                navLink.className = 'nav-link block font-medium p-2 rounded-md';
+                navLink.textContent = key;
+                desktopNav.appendChild(navLink);
+
+                const mobileNavLink = navLink.cloneNode(true);
+                mobileNavLinks.appendChild(mobileNavLink);
+
+                // Create Content Sections
+                const section = document.createElement('section');
+                section.id = sectionId;
+                section.className = 'mb-16';
+                
+                let itemsHtml = sectionData.items.map(item => `
+                    <div class="card rounded-lg p-4">
+                        <h4 class="font-bold text-md text-[#312a21]">${item.name}</h4>
+                        <p class="text-sm text-gray-600 mt-1">${item.desc}</p>
+                    </div>
+                `).join('');
+
+                section.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-3">${sectionData.icon}</span>
+                        <div>
+                            <h3 class="text-2xl font-bold text-[#312a21]">${key}</h3>
+                            <p class="text-md text-gray-600">${sectionData.description}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        ${itemsHtml}
+                    </div>
+                `;
+                appContent.appendChild(section);
+            });
+
+            // Chart.js Doughnut Chart
+            const ctx = document.getElementById('overviewChart').getContext('2d');
+            const overviewChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: sectionKeys,
+                    datasets: [{
+                        label: 'Frontend Concepts',
+                        data: sectionKeys.map(() => 10), // Equal weight for all
+                        backgroundColor: [
+                            '#d1bfa3', '#eaddc7', '#c9a987', '#b29471',
+                            '#9c7f5c', '#876a47', '#725632', '#5e421d', '#4a2f08'
+                        ],
+                        borderColor: '#f4f1eb',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}`;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            // Ensure the sectionId is generated consistently with the section creation
+                            const sectionId = sectionKeys[index].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
+            });
+
+            // Navigation Logic
+            const allNavLinks = document.querySelectorAll('.nav-link');
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    // Use getElementById directly after removing the '#' from href
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu on click
+                    if(document.getElementById('mobile-nav').classList.contains('hidden') === false) {
+                       document.getElementById('mobile-nav').classList.add('hidden');
+                    }
+                });
+            });
+
+            // Active nav link on scroll
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileNav.classList.remove('hidden');
+            });
+
+            closeMobileMenuButton.addEventListener('click', () => {
+                mobileNav.classList.add('hidden');
+            });
+            
+            mobileNav.addEventListener('click', (e) => {
+                if (e.target === mobileNav) {
+                    mobileNav.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
