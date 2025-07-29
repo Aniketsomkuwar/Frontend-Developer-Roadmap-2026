@@ -77,14 +77,14 @@
                     <button id="close-mobile-menu" class="absolute top-4 right-4 text-2xl">&times;</button>
                     <h2 class="text-xl font-bold text-[#312a21] mb-6">Navigation</h2>
                     <nav id="mobile-nav-links" class="space-y-2">
-                           </nav>
+                               </nav>
                 </div>
             </div>
 
             <div id="app-content">
                 </div>
             <footer class="w-full mt-10 py-4 px-4 text-sm card rounded text-gray-600">
-        <p class="flex items-center justify-center gap-1 flex-wrap  ">
+        <p class="flex items-center justify-center gap-1 flex-wrap ">
   Created with <span class="text-red-500">❤️</span> by
   <a
     href="https://www.linkedin.com/in/aniketsomkuwar/"
@@ -103,6 +103,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const data = {
+                "Foundations": {
+                    icon: '📜',
+                    description: "The absolute basics every web developer must master, forming the bedrock of all frontend work.",
+                    items: [
+                        { name: "HTML", desc: "The standard markup language for creating web pages and web applications. It provides the structure of content." },
+                        { name: "CSS", desc: "A stylesheet language used to describe the presentation of a document written in HTML, including colors, layout, and fonts." },
+                        { name: "JavaScript", desc: "The programming language of the web, enabling interactive and dynamic content." },
+                        { name: "Browser APIs", desc: "Interfaces that allow web applications to interact with the browser and computer environment, like Fetch API for network requests or Geolocation API for location." },
+                    ]
+                },
                 "Core Frontend": {
                     icon: '💻',
                     description: "The foundational pillars of modern web development, from language to frameworks.",
@@ -112,6 +122,32 @@
                         { name: "Next.js", desc: "A React framework for building production-ready applications with features like SSR and SSG." },
                         { name: "Tailwind CSS", desc: "A utility-first CSS framework for rapidly building custom designs directly in your markup." },
                         { name: "Modern CSS", desc: "Advanced features like @container, :has(), :is(), :not(), and :where() for powerful styling." },
+                    ]
+                },
+                "State Management": {
+                    icon: '💾',
+                    description: "Libraries for managing application state, ensuring data consistency and predictability.",
+                    items: [
+                        { name: "Redux Toolkit", desc: "The official, opinionated, batteries-included toolset for efficient Redux development, simplifying state logic." },
+                        { name: "Zustand", desc: "A small, fast, and scalable bear-necessities state-management solution using simplified flux principles." },
+                    ]
+                },
+                "Data Fetching & APIs": {
+                    icon: '🔗',
+                    description: "Approaches and tools for communicating with backend services and managing data.",
+                    items: [
+                        { name: "REST API", desc: "A widely used architectural style for networked applications, leveraging standard HTTP methods for data exchange." },
+                        { name: "GraphQL", desc: "A query language for your API, enabling clients to request exactly the data they need, reducing over-fetching." },
+                        { name: "TanStack Query (React Query)", desc: "Powerful data-fetching and caching library for React, Vue, Solid, Svelte, and Angular, simplifying server state management." },
+                        { name: "Axios", desc: "A popular promise-based HTTP client for the browser and Node.js, known for its ease of use and features like interceptors." },
+                    ]
+                },
+                "Forms": {
+                    icon: '📝',
+                    description: "Libraries and patterns for building and managing complex forms in web applications.",
+                    items: [
+                        { name: "React Hook Form", desc: "A performant, flexible, and extensible forms library that leverages React Hooks for validation and submission." },
+                        { name: "Formik", desc: "A popular library for building forms in React, handling form state, validation, and submission logic." },
                     ]
                 },
                 "Rendering & Architecture": {
@@ -124,7 +160,7 @@
                         { name: "ISR (Incremental Static Regeneration)", desc: "A Next.js feature to update static pages after they've been built without a full site rebuild." },
                         { name: "Hybrid Rendering", desc: "Combining different rendering strategies (SSR, SSG, CSR) in one application." },
                         { name: "Islands Architecture", desc: "Loading small, interactive 'islands' of JavaScript on top of static HTML to improve performance." },
-                        { name: "Routing", desc: "The mechanism for navigating between different pages or views within an application." },
+                        { name: "Routing (React Router)", desc: "A widely used library for declarative routing in React applications, handling navigation and URL synchronization." },
                         { name: "Mobile-First Navigation", desc: "Designing navigation primarily for mobile devices, then scaling up for larger screens." },
                     ]
                 },
@@ -154,8 +190,56 @@
                         { name: "Suspense", desc: "A React feature to 'wait' for code to load and specify a loading indicator." },
                         { name: "Code Splitting", desc: "Dividing code into smaller chunks that can be loaded on demand." },
                         { name: "react-window", desc: "A library for efficiently rendering large lists and tabular data." },
+                        { name: "react-virtuoso", desc: "A modern, performant, and flexible React component for virtualizing large lists." },
                         { name: "Lozad.js", desc: "A lightweight, pure JavaScript lazy loader for images, videos, and iframes." },
-                        { name: "Lenis.js", desc: "A smooth scroll library for enhancing scroll animations." },
+                        { name: "Lenis", desc: "A smooth scroll library for enhancing scroll animations." },
+                    ]
+                },
+                "Animations": {
+                    icon: '✨',
+                    description: "Libraries for creating fluid, interactive, and engaging user experiences.",
+                    items: [
+                        { name: "Framer Motion", desc: "A production-ready motion library for React." },
+                        { name: "GSAP", desc: "A robust JavaScript toolset for professional-grade animations." },
+                        { name: "GSAP ScrollTrigger", desc: "A GSAP plugin for creating scroll-based animations." },
+                        { name: "anime.js", desc: "A lightweight JavaScript animation library with a simple, yet powerful API." },
+                        { name: "barba.js", desc: "A library for creating fluid and smooth transitions between website pages." },
+                        { name: "matter.js", desc: "A 2D physics engine for the web." },
+                        { name: "cannon-es", desc: "A lightweight 3D physics engine for the web, a maintained fork of Cannon.js." },
+                    ]
+                },
+                "3D & Graphics": {
+                    icon: '🧊',
+                    description: "Technologies for bringing three-dimensional graphics and rendering to the web.",
+                    items: [
+                        { name: "Three.js", desc: "A JavaScript 3D library that simplifies displaying 3D graphics in a browser using WebGL." },
+                        { name: "React Three Fiber", desc: "A React renderer for Three.js, making it easier to integrate 3D into React applications." },
+                        { name: "Babylon.js", desc: "A powerful, open game and rendering engine packed into a friendly JavaScript framework." },
+                    ]
+                },
+                "AI, ML & WASM": {
+                    icon: '🧠',
+                    description: "Advanced technologies for computation, machine learning, and new frontiers on the web.",
+                    items: [
+                        { name: "TensorFlow.js", desc: "A library for developing and deploying machine learning models directly in the browser using JavaScript." },
+                        { name: "Brain.js", desc: "A JavaScript library for neural networks, enabling in-browser machine learning." },
+                        { name: "ml5.js", desc: "Friendly machine learning for the web, accessible to artists and creative coders." },
+                        { name: "OpenCV.js", desc: "Open Source Computer Vision Library compiled to JavaScript for in-browser use, enabling real-time image and video processing." },
+                        { name: "Hugging Face", desc: "A platform with tools and models for building and deploying machine learning models, often used for NLP and computer vision." },
+                        { name: "LangChain", desc: "A framework for developing applications powered by large language models, offering tools for chaining together LLMs and other components." },
+                        { name: "WebAssembly (WASM)", desc: "A binary instruction format enabling high-performance applications (written in other languages like C++/Rust) to run efficiently on the web." },
+                    ]
+                },
+                "Security": {
+                    icon: '🔒',
+                    description: "Crucial practices and mechanisms to protect web applications and user data from vulnerabilities.",
+                    items: [
+                        { name: "CORS (Cross-Origin Resource Sharing)", desc: "A browser security feature that restricts how resources are requested from a different domain, ensuring secure cross-origin communication." },
+                        { name: "Authentication Strategies", desc: "Methods for verifying user identity, including session-based, token-based (JWT), and OAuth for third-party logins." },
+                        { name: "JWT (JSON Web Tokens)", desc: "A compact, URL-safe means of representing claims to be transferred between two parties, commonly used for authorization." },
+                        { name: "OAuth", desc: "An open standard for access delegation, commonly used as a way for internet users to grant websites or applications access to their information on other websites without giving them the passwords." },
+                        { name: "HTTPS", desc: "Secure communication over a computer network, widely used on the Internet. Essential for encrypting data in transit." },
+                        { name: "Input Validation & Sanitization", desc: "Protecting against common web vulnerabilities like XSS and SQL injection by ensuring all user input is safe and correctly formatted." },
                     ]
                 },
                 "Testing": {
@@ -171,37 +255,15 @@
                         { name: "QA Wolf", desc: "A platform for generating and maintaining end-to-end tests." },
                     ]
                 },
-                "Animations": {
-                    icon: '✨',
-                    description: "Libraries for creating fluid, interactive, and engaging user experiences.",
+                "Development Workflow": {
+                    icon: '⚙️',
+                    description: "Essential tools and practices for efficient team collaboration and code management.",
                     items: [
-                        { name: "Framer Motion", desc: "A production-ready motion library for React." },
-                        { name: "GSAP", desc: "A robust JavaScript toolset for professional-grade animations." },
-                        { name: "GSAP ScrollTrigger", desc: "A GSAP plugin for creating scroll-based animations." },
-                        { name: "anime.js", desc: "A lightweight JavaScript animation library with a simple, yet powerful API." },
-                        { name: "barba.js", desc: "A library for creating fluid and smooth transitions between website pages." },
-                        { name: "matter.js", desc: "A 2D physics engine for the web." },
-                        { name: "Lenis", desc: "(Duplicated) A smooth scroll library for enhancing scroll animations." },
-                    ]
-                },
-                "3D & Graphics": {
-                    icon: '🧊',
-                    description: "Technologies for bringing three-dimensional graphics and rendering to the web.",
-                    items: [
-                        { name: "Three.js", desc: "A JavaScript 3D library that simplifies displaying 3D graphics in a browser using WebGL." },
-                        { name: "Babylon.js", desc: "A powerful, open game and rendering engine packed into a friendly JavaScript framework." },
-                    ]
-                },
-                "AI, ML & WASM": {
-                    icon: '🧠',
-                    description: "Advanced technologies for computation, machine learning, and new frontiers on the web.",
-                    items: [
-                        { name: "Hugging Face", desc: "A platform with tools and models for building and deploying machine learning models." },
-                        { name: "LangChain", desc: "A framework for developing applications powered by language models." },
-                        { name: "brain.js", desc: "A JavaScript library for neural networks." },
-                        { name: "ml5.js", desc: "Friendly machine learning for the web, accessible to artists and creative coders." },
-                        { name: "OpenCV.js", desc: "Open Source Computer Vision Library compiled to JavaScript for in-browser use." },
-                        { name: "WebAssembly (WASM)", desc: "A binary instruction format enabling high-performance applications on the web." },
+                        { name: "Git", desc: "A distributed version control system for tracking changes in source code during software development." },
+                        { name: "GitHub", desc: "A cloud-based platform for hosting Git repositories, enabling collaboration, code review, and issue tracking." },
+                        { name: "NPM/Yarn", desc: "Package managers for JavaScript, used to install, manage, and share project dependencies." },
+                        { name: "Linters (ESLint, Prettier)", desc: "Tools that analyze code for programmatic and stylistic errors, enforcing coding standards and improving code quality." },
+                        { name: "CI/CD (Continuous Integration/Deployment)", desc: "Automated processes for integrating code changes frequently and deploying them rapidly and reliably." },
                     ]
                 },
                 "Accessibility": {
@@ -224,18 +286,41 @@
             // Function to get a link for each technology
             function getLink(itemName) {
                 switch (itemName) {
+                    case "HTML": return "https://developer.mozilla.org/en-US/docs/Web/HTML";
+                    case "CSS": return "https://developer.mozilla.org/en-US/docs/Web/CSS";
+                    case "JavaScript": return "https://developer.mozilla.org/en-US/docs/Web/JavaScript";
                     case "TypeScript": return "https://www.typescriptlang.org/";
                     case "React": return "https://react.dev/";
                     case "Next.js": return "https://nextjs.org/";
                     case "Tailwind CSS": return "https://tailwindcss.com/";
-                    case "Modern CSS": return "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference"; // General CSS reference
+                    case "Modern CSS": return "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference";
+                    case "Redux Toolkit": return "https://redux-toolkit.js.org/";
+                    case "Zustand": return "https://zustand-demo.pmnd.rs/";
+                    case "REST API": return "https://restfulapi.net/";
+                    case "GraphQL": return "https://graphql.org/";
+                    case "TanStack Query (React Query)": return "https://tanstack.com/query/v5/";
+                    case "Axios": return "https://axios-http.com/";
+                    case "React Hook Form": return "https://react-hook-form.com/";
+                    case "Formik": return "https://formik.org/";
+                    case "Browser APIs": return "https://developer.mozilla.org/en-US/docs/Web/API";
+                    case "CORS (Cross-Origin Resource Sharing)": return "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS";
+                    case "Authentication Strategies": return "https://auth0.com/docs/authenticate/";
+                    case "JWT (JSON Web Tokens)": return "https://jwt.io/";
+                    case "OAuth": return "https://oauth.net/2/";
+                    case "HTTPS": return "https://developer.mozilla.org/en-US/docs/Glossary/HTTPS";
+                    case "Input Validation & Sanitization": return "https://owasp.org/www-community/vulnerabilities/xss"; // OWASP XSS for example
+                    case "Git": return "https://git-scm.com/";
+                    case "GitHub": return "https://github.com/";
+                    case "NPM/Yarn": return "https://docs.npmjs.com/"; // Can link to npm, or yarnpkg.com
+                    case "Linters (ESLint, Prettier)": return "https://eslint.org/"; // Can also link prettier.io
+                    case "CI/CD (Continuous Integration/Deployment)": return "https://www.atlassian.com/continuous-delivery/ci-cd-pipelines/ci-cd-explained";
                     case "CSR (Client-Side Rendering)": return "https://developer.mozilla.org/en-US/docs/Glossary/Client-side_rendering";
                     case "SSR (Server-Side Rendering)": return "https://developer.mozilla.org/en-US/docs/Glossary/Server-side_rendering";
                     case "SSG (Static Site Generation)": return "https://www.netlify.com/blog/2020/06/04/what-is-static-site-generation/";
                     case "ISR (Incremental Static Regeneration)": return "https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration";
-                    case "Hybrid Rendering": return "https://nextjs.org/docs/pages/building-your-application/rendering"; // Next.js covers hybrid well
+                    case "Hybrid Rendering": return "https://nextjs.org/docs/pages/building-your-application/rendering";
                     case "Islands Architecture": return "https://jasonformat.com/islands-architecture/";
-                    case "Routing": return "https://developer.mozilla.org/en-US/docs/Web/API/History_API";
+                    case "Routing (React Router)": return "https://reactrouter.com/";
                     case "Mobile-First Navigation": return "https://www.smashingmagazine.com/2013/09/responsive-navigation-patterns-context/";
                     case "Micro-Frontends": return "https://micro-frontends.org/";
                     case "Module Federation": return "https://webpack.js.org/concepts/module-federation/";
@@ -249,13 +334,30 @@
                     case "Vite": return "https://vitejs.dev/";
                     case "Webpack": return "https://webpack.js.org/";
                     case "Lazy Loading": return "https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading";
-                    case "Conditional Loading": return "https://react.dev/learn/conditional-rendering"; // Example for React
+                    case "Conditional Loading": return "https://react.dev/learn/conditional-rendering";
                     case "Suspense": return "https://react.dev/reference/react/Suspense";
                     case "Code Splitting": return "https://webpack.js.org/guides/code-splitting/";
                     case "react-window": return "https://react-window.vercel.app/";
+                    case "react-virtuoso": return "https://virtuoso.dev/";
                     case "Lozad.js": return "https://lozad.marcelodolza.com/";
-                    case "Lenis.js":
                     case "Lenis": return "https://lenis.studio/";
+                    case "Framer Motion": return "https://www.framer.com/motion/";
+                    case "GSAP": return "https://greensock.com/gsap/";
+                    case "GSAP ScrollTrigger": return "https://greensock.com/docs/v3/Plugins/ScrollTrigger";
+                    case "anime.js": return "https://animejs.com/";
+                    case "barba.js": return "https://barbajs.org/";
+                    case "matter.js": return "https://brm.io/matter-js/";
+                    case "cannon-es": return "https://github.com/pmndrs/cannon-es";
+                    case "Three.js": return "https://threejs.org/";
+                    case "React Three Fiber": return "https://docs.pmnd.rs/react-three-fiber/getting-started/introduction";
+                    case "Babylon.js": return "https://www.babylonjs.com/";
+                    case "TensorFlow.js": return "https://www.tensorflow.org/js";
+                    case "Brain.js": return "https://github.com/BrainJS/brain.js";
+                    case "ml5.js": return "https://ml5js.org/";
+                    case "OpenCV.js": return "https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html";
+                    case "Hugging Face": return "https://huggingface.co/";
+                    case "LangChain": return "https://www.langchain.com/";
+                    case "WebAssembly (WASM)": return "https://webassembly.org/";
                     case "Jest": return "https://jestjs.io/";
                     case "React Testing Library": return "https://testing-library.com/docs/react-testing-library/intro/";
                     case "Storybook": return "https://storybook.js.org/";
@@ -263,20 +365,6 @@
                     case "Playwright": return "https://playwright.dev/";
                     case "Testim": return "https://www.testim.io/";
                     case "QA Wolf": return "https://www.qawolf.com/";
-                    case "Framer Motion": return "https://www.framer.com/motion/";
-                    case "GSAP": return "https://greensock.com/gsap/";
-                    case "GSAP ScrollTrigger": return "https://greensock.com/docs/v3/Plugins/ScrollTrigger";
-                    case "anime.js": return "https://animejs.com/";
-                    case "barba.js": return "https://barbajs.org/";
-                    case "matter.js": return "https://brm.io/matter-js/";
-                    case "Three.js": return "https://threejs.org/";
-                    case "Babylon.js": return "https://www.babylonjs.com/";
-                    case "Hugging Face": return "https://huggingface.co/";
-                    case "LangChain": return "https://www.langchain.com/";
-                    case "brain.js": return "https://github.com/BrainJS/brain.js";
-                    case "ml5.js": return "https://ml5js.org/";
-                    case "OpenCV.js": return "https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html";
-                    case "WebAssembly (WASM)": return "https://webassembly.org/";
                     case "Keyboard Navigation": return "https://webaim.org/techniques/keyboard/";
                     case "ARIA Roles": return "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles";
                     case "Semantic HTML": return "https://developer.mozilla.org/en-US/docs/Glossary/Semantic_HTML";
@@ -357,7 +445,7 @@
                         data: sectionKeys.map(() => 10), // Equal weight for all
                         backgroundColor: [
                             '#d1bfa3', '#eaddc7', '#c9a987', '#b29471',
-                            '#9c7f5c', '#876a47', '#725632', '#5e421d', '#4a2f08'
+                            '#9c7f5c', '#876a47', '#725632', '#5e421d', '#4a2f08', '#d1bfa3', '#eaddc7', '#c9a987' // Added more colors for new categories
                         ],
                         borderColor: '#f4f1eb',
                         borderWidth: 3
