@@ -1,542 +1,583 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Frontend Learning Map 2026 - Aniket</title>
+    <title>Frontend Developer Roadmap 2026 - Master the Future</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f1eb;
-            color: #4a4a4a;
-        }
-        .nav-link {
-            transition: all 0.3s ease;
-        }
-        .nav-link.active, .nav-link:hover {
-            background-color: #eaddc7;
-            color: #312a21;
-            transform: translateX(4px);
-        }
-        .card {
-            background-color: #fff;
-            border: 1px solid #eaddc7;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky 500
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            bg: '#020617', // Slate 950
+                            card: '#0f172a', // Slate 900
+                            border: '#1e293b', // Slate 800
+                            text: '#e2e8f0', // Slate 200
+                            muted: '#94a3b8', // Slate 400
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
             }
         }
-           .main-content {
-            scroll-behavior: smooth;
+    </script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
+        }
+
+        .card-hoverable {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hoverable:hover {
+            transform: translateY(-4px);
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.3);
+        }
+
+        .nav-item.active {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            border-right: 3px solid #38bdf8;
+        }
+
+        /* Timeline / Tree Styles */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* Central Line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            /* Mobile layout line Position */
+            width: 4px;
+            background: linear-gradient(to bottom, #0ea5e9, #8b5cf6, #0ea5e9);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+            z-index: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .timeline::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-item {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 60px;
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+            .timeline-item {
+                width: 50%;
+            }
+
+            .timeline-item:nth-child(odd) {
+                left: 0;
+                padding-right: 50px;
+                text-align: right;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 50%;
+                padding-left: 50px;
+                text-align: left;
+            }
+
+            /* Flip the internal layout for right-aligned items */
+            .timeline-item:nth-child(odd) .card-header {
+                flex-direction: row-reverse;
+            }
+
+            .timeline-item:nth-child(odd) .grid-layout {
+                direction: rtl;
+                /* Experimental trick for grid mirroring, or just arrange grid items */
+            }
+
+            .timeline-item:nth-child(odd) .grid-item {
+                direction: ltr;
+                text-align: left;
+            }
+        }
+
+        /* The Connector Dot */
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            left: 14px;
+            /* Mobile dot position */
+            width: 16px;
+            height: 16px;
+            background: #020617;
+            border: 2px solid #38bdf8;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: #38bdf8;
+            box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.4);
+        }
+
+        @media (min-width: 1024px) {
+            .timeline-item:nth-child(odd) .timeline-dot {
+                left: auto;
+                right: -8px;
+                /* Half of line width (4/2 = 2) + Half of dot width (16/2 = 8) ? No. right: -50px (padding) + ? 
+                              Actually, easy way: place it on the line. right -6px if width is 50% */
+                right: -58px;
+                /* 50px padding + 4px extra for center alignment approx */
+                right: -8px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: -8px;
+            }
+
+            /* Correction for 50% width containers */
+            .timeline-item:nth-child(odd) {
+                transform: translateX(0);
+                /* Ensure no shift */
+            }
+
+            /* Re-calc dot pos based on exact container edge */
+            .timeline-item:nth-child(odd) .timeline-dot {
+                right: -8px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: -8px;
+            }
         }
     </style>
 </head>
-<body class="antialiased">
-    <div class="flex min-h-screen">
-        <aside class="w-64 bg-[#faf8f5] border-r border-[#eaddc7] p-6 hidden lg:block fixed h-full">
-            <h2 class="text-xl font-bold text-[#312a21] mb-6">Learning Map 2026</h2>
-            <nav id="desktop-nav" class="space-y-2">
-                </nav>
-        </aside>
 
-        <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-10 main-content">
-            <header class="mb-10">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-3xl md:text-4xl font-bold text-[#312a21]">Frontend Development Learning Map 2026</h1>
-                    <div class="lg:hidden">
-                        <button id="mobile-menu-button" class="p-2 rounded-md text-[#312a21] bg-[#eaddc7]">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                        </button>
+<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <div class="flex min-h-screen relative">
+
+        <!-- Mobile Header -->
+        <div
+            class="lg:hidden fixed top-0 w-full z-50 glass-card border-b border-dark-border px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i data-lucide="map" class="text-cyan-400"></i>
+                <span class="font-display font-bold text-lg tracking-tight">DevMap <span
+                        class="text-cyan-400">2026</span></span>
+            </div>
+            <button id="mobile-menu-btn" class="p-2 text-dark-muted hover:text-white transition-colors">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar"
+            class="fixed inset-y-0 left-0 z-40 w-72 bg-dark-bg/95 border-r border-dark-border transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto">
+            <div class="p-6 sticky top-0 bg-dark-bg/95 z-10 backdrop-blur-sm">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="p-2 bg-cyan-500/10 rounded-lg">
+                        <i data-lucide="compass" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-xl tracking-tight leading-none">Frontend</h1>
+                        <span class="text-xs text-dark-muted font-mono">Roadmap 2026</span>
                     </div>
                 </div>
-                <p class="mt-2 text-lg text-gray-600">An interactive guide to the modern frontend ecosystem. Click the chart segments or use the navigation to explore different areas.</p>
-            </header>
 
-            <div id="mobile-nav" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40">
-                <div class="fixed left-0 top-0 h-full w-64 bg-[#faf8f5] p-6 overflow-y-auto">
-                    <button id="close-mobile-menu" class="absolute top-4 right-4 text-2xl">&times;</button>
-                    <h2 class="text-xl font-bold text-[#312a21] mb-6">Navigation</h2>
-                    <nav id="mobile-nav-links" class="space-y-2">
-                               </nav>
+                <div class="relative mb-6">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                    <input type="text" id="search-input" placeholder="Find topic..."
+                        class="w-full bg-slate-900 border border-slate-700 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-slate-600">
                 </div>
             </div>
 
-            <div id="app-content">
+            <nav id="nav-links" class="px-4 pb-6 space-y-1">
+                <!-- Links injected by JS -->
+            </nav>
+        </aside>
+
+        <!-- Overlay for mobile -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden backdrop-blur-sm lg:hidden"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-72 min-h-screen p-4 sm:p-8 pt-20 lg:pt-8 relative overflow-hidden">
+            <!-- Background Decorations -->
+            <div
+                class="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[100px] -z-10 animate-pulse-slow">
+            </div>
+            <div
+                class="absolute bottom-0 left-10 w-[300px] h-[300px] bg-violet-500/10 rounded-full blur-[80px] -z-10 animate-float">
+            </div>
+
+            <header class="max-w-6xl mx-auto mb-12 animate-fade-in text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-4">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    </span>
+                    Interactive Flow 2026
                 </div>
-            <footer class="w-full mt-10 py-4 px-4 text-sm card rounded text-gray-600">
-        <p class="flex items-center justify-center gap-1 flex-wrap ">
-  Created with <span class="text-red-500">❤️</span> by
-  <a
-    href="https://www.linkedin.com/in/aniketsomkuwar/"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="font-medium text-blue-600 hover:underline"
-  >
-    Aniket Somkuwar
-  </a>
-</p>
-    </footer>
-        </main>
-        
-    </div>
+                <h2
+                    class="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent mb-4">
+                    Master the Modern Web
+                </h2>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    Follow the path below to navigate the evolving ecosystem of Frontend Engineering.
+                </p>
+            </header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const data = {
-                "Foundations": {
-                    icon: '📜',
-                    description: "The absolute basics every web developer must master, forming the bedrock of all frontend work.",
-                    items: [
-                        { name: "HTML", desc: "The standard markup language for creating web pages and web applications. It provides the structure of content." },
-                        { name: "CSS", desc: "A stylesheet language used to describe the presentation of a document written in HTML, including colors, layout, and fonts." },
-                        { name: "JavaScript", desc: "The programming language of the web, enabling interactive and dynamic content." },
-                        { name: "Browser APIs", desc: "Interfaces that allow web applications to interact with the browser and computer environment, like Fetch API for network requests or Geolocation API for location." },
-                    ]
-                },
-                "Core Frontend": {
-                    icon: '💻',
-                    description: "The foundational pillars of modern web development, from language to frameworks.",
-                    items: [
-                        { name: "TypeScript", desc: "A superset of JavaScript that adds static typing, enhancing code quality and maintainability." },
-                        { name: "React", desc: "A declarative, component-based JavaScript library for building user interfaces." },
-                        { name: "Next.js", desc: "A React framework for building production-ready applications with features like SSR and SSG." },
-                        { name: "Tailwind CSS", desc: "A utility-first CSS framework for rapidly building custom designs directly in your markup." },
-                        { name: "Modern CSS", desc: "Advanced features like @container, :has(), :is(), :not(), and :where() for powerful styling." },
-                    ]
-                },
-                "State Management": {
-                    icon: '💾',
-                    description: "Libraries for managing application state, ensuring data consistency and predictability.",
-                    items: [
-                        { name: "Redux Toolkit", desc: "The official, opinionated, batteries-included toolset for efficient Redux development, simplifying state logic." },
-                        { name: "Zustand", desc: "A small, fast, and scalable bear-necessities state-management solution using simplified flux principles." },
-                    ]
-                },
-                "Data Fetching & APIs": {
-                    icon: '🔗',
-                    description: "Approaches and tools for communicating with backend services and managing data.",
-                    items: [
-                        { name: "REST API", desc: "A widely used architectural style for networked applications, leveraging standard HTTP methods for data exchange." },
-                        { name: "GraphQL", desc: "A query language for your API, enabling clients to request exactly the data they need, reducing over-fetching." },
-                        { name: "TanStack Query (React Query)", desc: "Powerful data-fetching and caching library for React, Vue, Solid, Svelte, and Angular, simplifying server state management." },
-                        { name: "Axios", desc: "A popular promise-based HTTP client for the browser and Node.js, known for its ease of use and features like interceptors." },
-                    ]
-                },
-                "Forms": {
-                    icon: '📝',
-                    description: "Libraries and patterns for building and managing complex forms in web applications.",
-                    items: [
-                        { name: "React Hook Form", desc: "A performant, flexible, and extensible forms library that leverages React Hooks for validation and submission." },
-                        { name: "Formik", desc: "A popular library for building forms in React, handling form state, validation, and submission logic." },
-                    ]
-                },
-                "Rendering & Architecture": {
-                    icon: '🏛️',
-                    description: "Strategies and patterns for how web pages are delivered and structured.",
-                    items: [
-                        { name: "CSR (Client-Side Rendering)", desc: "The browser downloads a minimal HTML page and JavaScript, which then renders the content." },
-                        { name: "SSR (Server-Side Rendering)", desc: "The server renders the initial HTML for a page, improving initial load times and SEO." },
-                        { name: "SSG (Static Site Generation)", desc: "Pages are pre-rendered at build time, resulting in highly performant static assets." },
-                        { name: "ISR (Incremental Static Regeneration)", desc: "A Next.js feature to update static pages after they've been built without a full site rebuild." },
-                        { name: "Hybrid Rendering", desc: "Combining different rendering strategies (SSR, SSG, CSR) in one application." },
-                        { name: "Islands Architecture", desc: "Loading small, interactive 'islands' of JavaScript on top of static HTML to improve performance." },
-                        { name: "Routing (React Router)", desc: "A widely used library for declarative routing in React applications, handling navigation and URL synchronization." },
-                        { name: "Mobile-First Navigation", desc: "Designing navigation primarily for mobile devices, then scaling up for larger screens." },
-                    ]
-                },
-                "Componentization & UI Libraries": {
-                    icon: '🧱',
-                    description: "Tools and techniques for building reusable and scalable UI components.",
-                    items: [
-                        { name: "Micro-Frontends", desc: "Decomposing a large frontend into smaller, independently deployed applications." },
-                        { name: "Module Federation", desc: "A Webpack feature allowing separate builds to share code, enabling micro-frontends." },
-                        { name: "Web Components", desc: "A set of APIs for creating custom, reusable, encapsulated HTML tags." },
-                        { name: "MUI (Material-UI)", desc: "A comprehensive React UI component library for Google's Material Design." },
-                        { name: "Tailwind UI", desc: "Official UI components and templates built with Tailwind CSS." },
-                        { name: "Shadcn UI", desc: "Reusable components built with Radix UI and Tailwind CSS, designed for copy-pasting." },
-                        { name: "Chakra UI", desc: "A simple, modular, and accessible component library for React applications." },
-                        { name: "Radix UI", desc: "A low-level UI component library for building high-quality, accessible design systems." },
-                        { name: "Headless UI", desc: "Unstyled, fully accessible UI components designed to be styled with Tailwind CSS." },
-                    ]
-                },
-                "Tooling & Performance": {
-                    icon: '🚀',
-                    description: "The ecosystem of build tools, bundlers, and optimization techniques.",
-                    items: [
-                        { name: "Vite", desc: "A fast build tool offering instant server start and lightning-fast HMR." },
-                        { name: "Webpack", desc: "A static module bundler for modern JavaScript applications." },
-                        { name: "Lazy Loading", desc: "Deferring the loading of non-critical resources until they are needed." },
-                        { name: "Conditional Loading", desc: "Loading specific components or modules only when certain conditions are met." },
-                        { name: "Suspense", desc: "A React feature to 'wait' for code to load and specify a loading indicator." },
-                        { name: "Code Splitting", desc: "Dividing code into smaller chunks that can be loaded on demand." },
-                        { name: "react-window", desc: "A library for efficiently rendering large lists and tabular data." },
-                        { name: "react-virtuoso", desc: "A modern, performant, and flexible React component for virtualizing large lists." },
-                        { name: "Lozad.js", desc: "A lightweight, pure JavaScript lazy loader for images, videos, and iframes." },
-                        { name: "Lenis", desc: "A smooth scroll library for enhancing scroll animations." },
-                    ]
-                },
-                "Animations": {
-                    icon: '✨',
-                    description: "Libraries for creating fluid, interactive, and engaging user experiences.",
-                    items: [
-                        { name: "Framer Motion", desc: "A production-ready motion library for React." },
-                        { name: "GSAP", desc: "A robust JavaScript toolset for professional-grade animations." },
-                        { name: "GSAP ScrollTrigger", desc: "A GSAP plugin for creating scroll-based animations." },
-                        { name: "anime.js", desc: "A lightweight JavaScript animation library with a simple, yet powerful API." },
-                        { name: "barba.js", desc: "A library for creating fluid and smooth transitions between website pages." },
-                        { name: "matter.js", desc: "A 2D physics engine for the web." },
-                        { name: "cannon-es", desc: "A lightweight 3D physics engine for the web, a maintained fork of Cannon.js." },
-                    ]
-                },
-                "3D & Graphics": {
-                    icon: '🧊',
-                    description: "Technologies for bringing three-dimensional graphics and rendering to the web.",
-                    items: [
-                        { name: "Three.js", desc: "A JavaScript 3D library that simplifies displaying 3D graphics in a browser using WebGL." },
-                        { name: "React Three Fiber", desc: "A React renderer for Three.js, making it easier to integrate 3D into React applications." },
-                        { name: "Babylon.js", desc: "A powerful, open game and rendering engine packed into a friendly JavaScript framework." },
-                    ]
-                },
-                "AI, ML & WASM": {
-                    icon: '🧠',
-                    description: "Advanced technologies for computation, machine learning, and new frontiers on the web.",
-                    items: [
-                        { name: "TensorFlow.js", desc: "A library for developing and deploying machine learning models directly in the browser using JavaScript." },
-                        { name: "Brain.js", desc: "A JavaScript library for neural networks, enabling in-browser machine learning." },
-                        { name: "ml5.js", desc: "Friendly machine learning for the web, accessible to artists and creative coders." },
-                        { name: "OpenCV.js", desc: "Open Source Computer Vision Library compiled to JavaScript for in-browser use, enabling real-time image and video processing." },
-                        { name: "Hugging Face", desc: "A platform with tools and models for building and deploying machine learning models, often used for NLP and computer vision." },
-                        { name: "LangChain", desc: "A framework for developing applications powered by large language models, offering tools for chaining together LLMs and other components." },
-                        { name: "WebAssembly (WASM)", desc: "A binary instruction format enabling high-performance applications (written in other languages like C++/Rust) to run efficiently on the web." },
-                    ]
-                },
-                "Security": {
-                    icon: '🔒',
-                    description: "Crucial practices and mechanisms to protect web applications and user data from vulnerabilities.",
-                    items: [
-                        { name: "CORS (Cross-Origin Resource Sharing)", desc: "A browser security feature that restricts how resources are requested from a different domain, ensuring secure cross-origin communication." },
-                        { name: "Authentication Strategies", desc: "Methods for verifying user identity, including session-based, token-based (JWT), and OAuth for third-party logins." },
-                        { name: "JWT (JSON Web Tokens)", desc: "A compact, URL-safe means of representing claims to be transferred between two parties, commonly used for authorization." },
-                        { name: "OAuth", desc: "An open standard for access delegation, commonly used as a way for internet users to grant websites or applications access to their information on other websites without giving them the passwords." },
-                        { name: "HTTPS", desc: "Secure communication over a computer network, widely used on the Internet. Essential for encrypting data in transit." },
-                        { name: "Input Validation & Sanitization", desc: "Protecting against common web vulnerabilities like XSS and SQL injection by ensuring all user input is safe and correctly formatted." },
-                    ]
-                },
-                "Testing": {
-                    icon: '🧪',
-                    description: "Frameworks and libraries for ensuring application quality and reliability.",
-                    items: [
-                        { name: "Jest", desc: "A popular JavaScript Testing Framework with a focus on simplicity." },
-                        { name: "React Testing Library", desc: "Utilities for testing React components in a user-centric way." },
-                        { name: "Storybook", desc: "A tool for developing and testing UI components in isolation." },
-                        { name: "Cypress", desc: "A fast and reliable end-to-end testing framework for anything that runs in a browser." },
-                        { name: "Playwright", desc: "A Node.js library to automate Chromium, Firefox, and WebKit with a single API." },
-                        { name: "Testim", desc: "An AI-powered test automation platform for agile teams." },
-                        { name: "QA Wolf", desc: "A platform for generating and maintaining end-to-end tests." },
-                    ]
-                },
-                "Development Workflow": {
-                    icon: '⚙️',
-                    description: "Essential tools and practices for efficient team collaboration and code management.",
-                    items: [
-                        { name: "Git", desc: "A distributed version control system for tracking changes in source code during software development." },
-                        { name: "GitHub", desc: "A cloud-based platform for hosting Git repositories, enabling collaboration, code review, and issue tracking." },
-                        { name: "NPM/Yarn", desc: "Package managers for JavaScript, used to install, manage, and share project dependencies." },
-                        { name: "Linters (ESLint, Prettier)", desc: "Tools that analyze code for programmatic and stylistic errors, enforcing coding standards and improving code quality." },
-                        { name: "CI/CD (Continuous Integration/Deployment)", desc: "Automated processes for integrating code changes frequently and deploying them rapidly and reliably." },
-                    ]
-                },
-                "Accessibility": {
-                    icon: '♿',
-                    description: "Principles and practices for building inclusive websites usable by everyone.",
-                    items: [
-                        { name: "Keyboard Navigation", desc: "Ensuring all interactive elements are reachable and operable using only a keyboard." },
-                        { name: "ARIA Roles", desc: "Attributes that define UI element roles, helping assistive technologies interpret content." },
-                        { name: "Semantic HTML", desc: "Using HTML elements for their intended purpose to convey meaning to browsers." },
-                        { name: "Form Labeling", desc: "Associating labels with form controls to make them understandable for all users." },
-                    ]
-                }
-            };
-
-            const appContent = document.getElementById('app-content');
-            const desktopNav = document.getElementById('desktop-nav');
-            const mobileNavLinks = document.getElementById('mobile-nav-links');
-            const sectionKeys = Object.keys(data);
-
-            // Function to get a link for each technology
-            function getLink(itemName) {
-                switch (itemName) {
-                    case "HTML": return "https://developer.mozilla.org/en-US/docs/Web/HTML";
-                    case "CSS": return "https://developer.mozilla.org/en-US/docs/Web/CSS";
-                    case "JavaScript": return "https://developer.mozilla.org/en-US/docs/Web/JavaScript";
-                    case "TypeScript": return "https://www.typescriptlang.org/";
-                    case "React": return "https://react.dev/";
-                    case "Next.js": return "https://nextjs.org/";
-                    case "Tailwind CSS": return "https://tailwindcss.com/";
-                    case "Modern CSS": return "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference";
-                    case "Redux Toolkit": return "https://redux-toolkit.js.org/";
-                    case "Zustand": return "https://zustand-demo.pmnd.rs/";
-                    case "REST API": return "https://restfulapi.net/";
-                    case "GraphQL": return "https://graphql.org/";
-                    case "TanStack Query (React Query)": return "https://tanstack.com/query/v5/";
-                    case "Axios": return "https://axios-http.com/";
-                    case "React Hook Form": return "https://react-hook-form.com/";
-                    case "Formik": return "https://formik.org/";
-                    case "Browser APIs": return "https://developer.mozilla.org/en-US/docs/Web/API";
-                    case "CORS (Cross-Origin Resource Sharing)": return "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS";
-                    case "Authentication Strategies": return "https://auth0.com/docs/authenticate/";
-                    case "JWT (JSON Web Tokens)": return "https://jwt.io/";
-                    case "OAuth": return "https://oauth.net/2/";
-                    case "HTTPS": return "https://developer.mozilla.org/en-US/docs/Glossary/HTTPS";
-                    case "Input Validation & Sanitization": return "https://owasp.org/www-community/vulnerabilities/xss"; // OWASP XSS for example
-                    case "Git": return "https://git-scm.com/";
-                    case "GitHub": return "https://github.com/";
-                    case "NPM/Yarn": return "https://docs.npmjs.com/"; // Can link to npm, or yarnpkg.com
-                    case "Linters (ESLint, Prettier)": return "https://eslint.org/"; // Can also link prettier.io
-                    case "CI/CD (Continuous Integration/Deployment)": return "https://www.atlassian.com/continuous-delivery/ci-cd-pipelines/ci-cd-explained";
-                    case "CSR (Client-Side Rendering)": return "https://developer.mozilla.org/en-US/docs/Glossary/Client-side_rendering";
-                    case "SSR (Server-Side Rendering)": return "https://developer.mozilla.org/en-US/docs/Glossary/Server-side_rendering";
-                    case "SSG (Static Site Generation)": return "https://www.netlify.com/blog/2020/06/04/what-is-static-site-generation/";
-                    case "ISR (Incremental Static Regeneration)": return "https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration";
-                    case "Hybrid Rendering": return "https://nextjs.org/docs/pages/building-your-application/rendering";
-                    case "Islands Architecture": return "https://jasonformat.com/islands-architecture/";
-                    case "Routing (React Router)": return "https://reactrouter.com/";
-                    case "Mobile-First Navigation": return "https://www.smashingmagazine.com/2013/09/responsive-navigation-patterns-context/";
-                    case "Micro-Frontends": return "https://micro-frontends.org/";
-                    case "Module Federation": return "https://webpack.js.org/concepts/module-federation/";
-                    case "Web Components": return "https://www.webcomponents.org/";
-                    case "MUI (Material-UI)": return "https://mui.com/";
-                    case "Tailwind UI": return "https://tailwindui.com/";
-                    case "Shadcn UI": return "https://ui.shadcn.com/";
-                    case "Chakra UI": return "https://chakra-ui.com/";
-                    case "Radix UI": return "https://www.radix-ui.com/";
-                    case "Headless UI": return "https://headlessui.com/";
-                    case "Vite": return "https://vitejs.dev/";
-                    case "Webpack": return "https://webpack.js.org/";
-                    case "Lazy Loading": return "https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading";
-                    case "Conditional Loading": return "https://react.dev/learn/conditional-rendering";
-                    case "Suspense": return "https://react.dev/reference/react/Suspense";
-                    case "Code Splitting": return "https://webpack.js.org/guides/code-splitting/";
-                    case "react-window": return "https://react-window.vercel.app/";
-                    case "react-virtuoso": return "https://virtuoso.dev/";
-                    case "Lozad.js": return "https://lozad.marcelodolza.com/";
-                    case "Lenis": return "https://lenis.studio/";
-                    case "Framer Motion": return "https://www.framer.com/motion/";
-                    case "GSAP": return "https://greensock.com/gsap/";
-                    case "GSAP ScrollTrigger": return "https://greensock.com/docs/v3/Plugins/ScrollTrigger";
-                    case "anime.js": return "https://animejs.com/";
-                    case "barba.js": return "https://barbajs.org/";
-                    case "matter.js": return "https://brm.io/matter-js/";
-                    case "cannon-es": return "https://github.com/pmndrs/cannon-es";
-                    case "Three.js": return "https://threejs.org/";
-                    case "React Three Fiber": return "https://docs.pmnd.rs/react-three-fiber/getting-started/introduction";
-                    case "Babylon.js": return "https://www.babylonjs.com/";
-                    case "TensorFlow.js": return "https://www.tensorflow.org/js";
-                    case "Brain.js": return "https://github.com/BrainJS/brain.js";
-                    case "ml5.js": return "https://ml5js.org/";
-                    case "OpenCV.js": return "https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html";
-                    case "Hugging Face": return "https://huggingface.co/";
-                    case "LangChain": return "https://www.langchain.com/";
-                    case "WebAssembly (WASM)": return "https://webassembly.org/";
-                    case "Jest": return "https://jestjs.io/";
-                    case "React Testing Library": return "https://testing-library.com/docs/react-testing-library/intro/";
-                    case "Storybook": return "https://storybook.js.org/";
-                    case "Cypress": return "https://www.cypress.io/";
-                    case "Playwright": return "https://playwright.dev/";
-                    case "Testim": return "https://www.testim.io/";
-                    case "QA Wolf": return "https://www.qawolf.com/";
-                    case "Keyboard Navigation": return "https://webaim.org/techniques/keyboard/";
-                    case "ARIA Roles": return "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles";
-                    case "Semantic HTML": return "https://developer.mozilla.org/en-US/docs/Glossary/Semantic_HTML";
-                    case "Form Labeling": return "https://webaim.org/techniques/forms/controls#labels";
-                    default: return `https://www.google.com/search?q=${encodeURIComponent(itemName + " frontend")}`;
-                }
-            }
-
-
-            // Create overview section with chart
-            const overviewSection = document.createElement('section');
-            overviewSection.id = 'overview';
-            overviewSection.className = 'mb-16';
-            overviewSection.innerHTML = `
-                <h2 class="text-2xl font-bold text-[#312a21] mb-4">Key Concepts Overview</h2>
-                <div class="p-6 bg-white rounded-lg shadow-sm border border-[#eaddc7]">
-                    <div class="chart-container">
-                        <canvas id="overviewChart"></canvas>
+            <div class="max-w-6xl mx-auto space-y-16">
+                <!-- 2026 Paradigm Shift Section -->
+                <section id="paradigms" class="mb-20">
+                    <div class="flex items-center gap-3 mb-8 justify-center">
+                        <i data-lucide="zap" class="text-yellow-400 fill-yellow-400/20"></i>
+                        <h3
+                            class="font-display text-2xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+                            The 2026 Paradigm Shift</h3>
                     </div>
-                </div>
-            `;
-            appContent.appendChild(overviewSection);
 
-            // Populate sections and nav
-            sectionKeys.forEach(key => {
-                const sectionData = data[key];
-                // Updated sectionId generation to create valid HTML IDs
-                const sectionId = key.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Card 1: AI-Native -->
+                        <div
+                            class="glass-card p-6 rounded-2xl border border-emerald-500/20 relative overflow-hidden group">
+                            <div
+                                class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+                            </div>
+                            <i data-lucide="bot" class="w-10 h-10 text-emerald-400 mb-4"></i>
+                            <h4 class="text-lg font-bold text-white mb-2">AI-Augmented</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                Developers are no longer just coding syntax; they are orchestrating logic.
+                                <span class="text-emerald-400">GenAI</span> is your pair programmer, enabling you to
+                                build faster and tackle complex logic.
+                            </p>
+                        </div>
 
-                // Create Nav Links
-                const navLink = document.createElement('a');
-                navLink.href = `#${sectionId}`;
-                navLink.className = 'nav-link block font-medium p-2 rounded-md';
-                navLink.textContent = key;
-                desktopNav.appendChild(navLink);
+                        <!-- Card 2: Performance -->
+                        <div
+                            class="glass-card p-6 rounded-2xl border border-blue-500/20 relative overflow-hidden group">
+                            <div
+                                class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+                            </div>
+                            <i data-lucide="gauge" class="w-10 h-10 text-blue-400 mb-4"></i>
+                            <h4 class="text-lg font-bold text-white mb-2">Performance Core</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                <span class="text-blue-400">INP</span> (Interaction to Next Paint) is the new king.
+                                Optimization isn't an afterthought; it's baked into architecture via Resumability and
+                                fine-grained reactivity.
+                            </p>
+                        </div>
 
-                const mobileNavLink = navLink.cloneNode(true);
-                mobileNavLinks.appendChild(mobileNavLink);
-
-                // Create Content Sections
-                const section = document.createElement('section');
-                section.id = sectionId;
-                section.className = 'mb-16';
-                
-                let itemsHtml = sectionData.items.map(item => {
-                    const itemLink = getLink(item.name);
-                    return `
-                    <a href="${itemLink}" target="_blank" rel="noopener noreferrer" class="card block rounded-lg p-4 hover:border-blue-300">
-                        <h4 class="font-bold text-md text-[#312a21]">${item.name}</h4>
-                        <p class="text-sm text-gray-600 mt-1">${item.desc}</p>
-                    </a>
-                    `;
-                }).join('');
-
-                section.innerHTML = `
-                    <div class="flex items-center mb-4">
-                        <span class="text-2xl mr-3">${sectionData.icon}</span>
-                        <div>
-                            <h3 class="text-2xl font-bold text-[#312a21]">${key}</h3>
-                            <p class="text-md text-gray-600">${sectionData.description}</p>
+                        <!-- Card 3: Edge/Server -->
+                        <div
+                            class="glass-card p-6 rounded-2xl border border-purple-500/20 relative overflow-hidden group">
+                            <div
+                                class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+                            </div>
+                            <i data-lucide="server" class="w-10 h-10 text-purple-400 mb-4"></i>
+                            <h4 class="text-lg font-bold text-white mb-2">Edge Native</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                The full stack moves closer to the user.
+                                <span class="text-purple-400">Edge Functions</span> and Server Components (RSC) blur the
+                                line between backend and frontend.
+                            </p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        ${itemsHtml}
+                </section>
+
+                <!-- Tree Flow Area -->
+                <div id="content-area" class="pb-20">
+                    <!-- Javascript populates this as a Timeline -->
+                </div>
+            </div>
+
+            <footer class="max-w-5xl mx-auto border-t border-white/5 py-8 text-center">
+                <p class="text-slate-500 flex items-center justify-center gap-2">
+                    Crafted with <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500/20"></i> by
+                    <a href="https://linkedin.com/in/aniketsomkuwar"
+                        class="text-cyan-400 hover:text-cyan-300 transition-colors font-medium">Aniket</a>
+                </p>
+                <p class="text-slate-600 text-sm mt-2">© 2025-2026 Frontend Roadmap. Open Source.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if roadmapData is loaded
+            if (typeof roadmapData === 'undefined') {
+                console.error('Roadmap Data not loaded!');
+                return;
+            }
+
+            const navContainer = document.getElementById('nav-links');
+            const contentArea = document.getElementById('content-area');
+            const searchInput = document.getElementById('search-input');
+
+            // Theme Mapping for User's Data to maintain the Dark Mode Aesthetic
+            const themeMap = {
+                "Foundations": { icon: "file-code-2", color: "from-orange-500/20 to-red-500/20", accent: "text-orange-400" },
+                "Core Frontend": { icon: "cpu", color: "from-blue-500/20 to-cyan-500/20", accent: "text-blue-400" },
+                "State Management": { icon: "database", color: "from-purple-500/20 to-violet-500/20", accent: "text-purple-400" },
+                "Data Fetching & APIs": { icon: "network", color: "from-emerald-500/20 to-green-500/20", accent: "text-emerald-400" },
+                "Forms": { icon: "clipboard-list", color: "from-yellow-500/20 to-amber-500/20", accent: "text-yellow-400" },
+                "Rendering & Architecture": { icon: "layout-template", color: "from-indigo-500/20 to-blue-500/20", accent: "text-indigo-400" },
+                "Componentization & UI Libraries": { icon: "blocks", color: "from-pink-500/20 to-rose-500/20", accent: "text-pink-400" },
+                "Tooling & Performance": { icon: "wrench", color: "from-slate-500/20 to-gray-500/20", accent: "text-slate-400" },
+                "Animations": { icon: "sparkles", color: "from-fuchsia-500/20 to-purple-500/20", accent: "text-fuchsia-400" },
+                "3D & Graphics": { icon: "box", color: "from-cyan-500/20 to-teal-500/20", accent: "text-cyan-400" },
+                "AI, ML & WASM": { icon: "bot", color: "from-emerald-500/20 to-teal-500/20", accent: "text-emerald-400", badge: "NEW" },
+                "Security": { icon: "shield-alert", color: "from-red-500/20 to-orange-500/20", accent: "text-red-400" },
+                "Testing": { icon: "flask-conical", color: "from-lime-500/20 to-green-500/20", accent: "text-lime-400" },
+                "Development Workflow": { icon: "git-merge", color: "from-indigo-500/20 to-violet-500/20", accent: "text-indigo-400" },
+                "Accessibility": { icon: "accessibility", color: "from-sky-500/20 to-blue-500/20", accent: "text-sky-400" },
+                "Soft Skills & Growth": { icon: "brain-circuit", color: "from-rose-500/20 to-pink-500/20", accent: "text-rose-400" },
+                "AI Native Engineering": { icon: "zap", color: "from-amber-400/20 to-yellow-600/20", accent: "text-amber-400", badge: "GOD MODE" }
+            };
+
+            const defaultTheme = { icon: "circle", color: "from-slate-700/50 to-slate-800/50", accent: "text-slate-400" };
+
+            // Helper: Generate Link (Mock functionality for now, ideally real URLs)
+            const getLink = (term) => `https://www.google.com/search?q=${encodeURIComponent(term + ' documentation frontend 2026')}`;
+
+            // Create Timeline Wrapper
+            const timelineWrapper = document.createElement('div');
+            timelineWrapper.className = 'timeline';
+            contentArea.appendChild(timelineWrapper);
+
+            // 1. Render Navigation and Tree Flow
+            Object.entries(roadmapData).forEach(([key, section], index) => {
+                const sectionId = key.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                const theme = themeMap[key] || defaultTheme;
+                const isEven = index % 2 === 0;
+
+                // Nav Item (Keep sidebar for quick jump)
+                const navLink = document.createElement('a');
+                navLink.href = `#${sectionId}`;
+                navLink.className = `nav-item block px-4 py-2.5 text-sm font-medium text-slate-400 hover:text-white rounded-r-lg border-r-2 border-transparent transition-all duration-200 flex items-center justify-between group`;
+                navLink.innerHTML = `
+                    <span class="flex items-center gap-3">
+                        <i data-lucide="${theme.icon}" class="w-4 h-4 text-slate-600 group-hover:text-cyan-400 transition-colors"></i>
+                        ${key}
+                    </span>
+                    ${theme.badge ? `<span class="text-[10px] font-bold bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded uppercase tracking-wider">${theme.badge}</span>` : ''}
+                `;
+                navContainer.appendChild(navLink);
+
+                // Timeline Item
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item scroll-mt-24';
+                timelineItem.id = sectionId;
+
+                const itemsHtml = section.items.map(item => `
+                    <a href="${item.link || '#'}" target="_blank" class="grid-item glass-card card-hoverable p-4 rounded-xl border border-white/5 relative group block h-full bg-slate-900/40 overflow-hidden">
+                        ${item.mustLearn ? `
+                        <div class="absolute -right-12 top-4 transform rotate-45 bg-gradient-to-r from-red-600 to-orange-500 text-white text-[10px] font-bold px-12 py-1 shadow-lg z-10">
+                            MUST
+                        </div>` : ''}
+                        
+                        <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="external-link" class="w-3 h-3 text-slate-400"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-base text-slate-200 mb-1 group-hover:text-cyan-300 transition-colors pr-6">${item.name}</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">${item.desc}</p>
+                    </a>
+                `).join('');
+
+                timelineItem.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    
+                    <div class="p-0 md:px-4">
+                        <div class="card-header flex items-center gap-4 mb-6 ${!isEven ? '' : ''}">
+                            <div class="p-3 rounded-2xl bg-gradient-to-br ${theme.color} border border-white/10 shrink-0 shadow-lg shadow-${theme.color}/10">
+                                <i data-lucide="${theme.icon}" class="w-6 h-6 ${theme.accent}"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-1">
+                                    <h3 class="font-display text-2xl font-bold text-white">${key}</h3>
+                                    ${theme.badge ? `<span class="bg-cyan-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-lg shadow-cyan-500/20 animate-pulse">${theme.badge}</span>` : ''}
+                                </div>
+                                <p class="text-slate-400 text-sm flex items-center gap-2">
+                                     <!-- Emoji icon removed -->
+                                     ${section.description}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${itemsHtml}
+                        </div>
                     </div>
                 `;
-                appContent.appendChild(section);
+                timelineWrapper.appendChild(timelineItem);
             });
 
-            // Chart.js Doughnut Chart
-            const ctx = document.getElementById('overviewChart').getContext('2d');
-            const overviewChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: sectionKeys,
-                    datasets: [{
-                        label: 'Frontend Concepts',
-                        data: sectionKeys.map(() => 10), // Equal weight for all
-                        backgroundColor: [
-                            '#d1bfa3', '#eaddc7', '#c9a987', '#b29471',
-                            '#9c7f5c', '#876a47', '#725632', '#5e421d', '#4a2f08', '#d1bfa3', '#eaddc7', '#c9a987' // Added more colors for new categories
-                        ],
-                        borderColor: '#f4f1eb',
-                        borderWidth: 3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                            labels: {
-                                font: {
-                                    size: 12
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.label}`;
-                                }
-                            }
-                        }
-                    },
-                    onClick: (evt, elements) => {
-                        if (elements.length > 0) {
-                            const index = elements[0].index;
-                            // Ensure the sectionId is generated consistently with the section creation
-                            const sectionId = sectionKeys[index].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
-                }
-            });
+            // 2. Refresh Icons
+            lucide.createIcons();
 
-            // Navigation Logic
-            const allNavLinks = document.querySelectorAll('.nav-link');
-            allNavLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
+            // 4. Navigation & Scroll Logic
+            const navLinks = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('section');
+
+            // Click Handler
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Use getElementById directly after removing the '#' from href
-                    const targetId = this.getAttribute('href').substring(1);
-                    document.getElementById(targetId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    // Close mobile menu on click
-                    if(document.getElementById('mobile-nav').classList.contains('hidden') === false) {
-                       document.getElementById('mobile-nav').classList.add('hidden');
-                    }
+                    const targetId = link.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+
+                    // Close mobile menu
+                    const sidebar = document.getElementById('sidebar');
+                    const overlay = document.getElementById('sidebar-overlay');
+                    if (sidebar) sidebar.classList.add('-translate-x-full');
+                    if (overlay) overlay.classList.add('hidden');
                 });
             });
 
-            // Active nav link on scroll
-            const sections = document.querySelectorAll('section');
+            // Intersection Observer for Active State
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        document.querySelectorAll('.nav-link').forEach(link => {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
                             link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            if (link.getAttribute('href') === `#${id}`) {
                                 link.classList.add('active');
                             }
                         });
                     }
                 });
-            }, { rootMargin: "-50% 0px -50% 0px" });
-
-            sections.forEach(section => {
-                observer.observe(section);
+            }, {
+                threshold: 0.1,
+                rootMargin: "-20% 0px -60% 0px" // Adjust based on header height
             });
 
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
-            const mobileNav = document.getElementById('mobile-nav');
+            sections.forEach(section => observer.observe(section));
 
-            mobileMenuButton.addEventListener('click', () => {
-                mobileNav.classList.remove('hidden');
-            });
+            // 5. Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
 
-            closeMobileMenuButton.addEventListener('click', () => {
-                mobileNav.classList.add('hidden');
-            });
-            
-            mobileNav.addEventListener('click', (e) => {
-                if (e.target === mobileNav) {
-                    mobileNav.classList.add('hidden');
+            function toggleSidebar() {
+                const isClosed = sidebar.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
                 }
+            }
+
+            if (mobileBtn) mobileBtn.addEventListener('click', toggleSidebar);
+            if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+            // 6. Search Functionality
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.card-hoverable');
+
+                cards.forEach(card => {
+                    const title = card.querySelector('h4').textContent.toLowerCase();
+                    const desc = card.querySelector('p').textContent.toLowerCase();
+                    const visible = title.includes(term) || desc.includes(term);
+
+                    // Fade out/in effect
+                    if (visible) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.style.opacity = 1, 50);
+                    } else {
+                        card.style.opacity = 0;
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
             });
         });
     </script>
 </body>
+
 </html>
